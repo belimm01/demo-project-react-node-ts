@@ -1,0 +1,45 @@
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.form {
+  border: 2px solid;
+  display: flex;
+  height: 200px;
+}
+
+.errorMessage{
+  color: #cc0033;
+  display: inline-block;
+  font-size: 12px;
+  line-height: 15px;
+  margin: 5px 0 0;
+}
+
+.error label {
+  color: #cc0033;
+}
+
+.success label {
+  color: #36cc00;
+}
+
+.error input {
+  background-color: #fce4e4;
+  border: 1px solid #cc0033;
+  outline: none;
+}
+
+.success input {
+  background-color: #fce4e4;
+  border: 1px solid #36cc00;
+  outline: none;
+}
+
+.error .errorMessage {
+  display: inline-block;
+}

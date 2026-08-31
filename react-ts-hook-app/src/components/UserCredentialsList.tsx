@@ -1,21 +1,21 @@
-import React from "react";
+import { useQuery } from "@tanstack/react-query";
 import { getAll } from "../api/user.api";
-import { useQuery } from "react-query";
-import { UserCredentialsModel } from "../model/userCredentialsModel";
 
 export default function UserCredentialsList() {
-  const query = useQuery("userCredentials", () =>
-    getAll().then((res) => res.data)
-  );
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["userCredentials"],
+    queryFn: getAll,
+  });
 
   return (
     <>
       <h3>User credentials list:</h3>
+      {isLoading && <p>Loading…</p>}
+      {isError && <p>Failed to load user credentials.</p>}
       <ul>
-        {query.data?.length &&
-          query.data.map((userCredential: UserCredentialsModel) => (
-            <li key={userCredential.id}>{userCredential.email}</li>
-          ))}
+        {data?.map((userCredential) => (
+          <li key={userCredential.id}>{userCredential.email}</li>
+        ))}
       </ul>
     </>
   );

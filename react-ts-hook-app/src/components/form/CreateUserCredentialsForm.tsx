@@ -1,35 +1,37 @@
-import React from "react";
-import styles from "../../style/main.module.scss";
-
-import { useForm } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import InvalidMessage from "../common/InvalidMessage";
 import { save } from "../../api/user.api";
-import { UserCredentialsModel } from "../../model/userCredentialsModel";
-import { useMutation, useQueryClient } from "react-query";
+import type { CreateUserCredentials } from "../../model/userCredentialsModel";
+import styles from "../../style/main.module.scss";
 
 export default function CreateUserCredentialsForm() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm();
+  } = useForm<CreateUserCredentials>();
   const queryClient = useQueryClient();
-  const mutation = useMutation(save, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("userCredentials");
+
+  const mutation = useMutation({
+    mutationFn: save,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["userCredentials"] });
+      reset();
     },
   });
-  const onSubmit = (data: UserCredentialsModel) => {
+
+  const onSubmit: SubmitHandler<CreateUserCredentials> = (data) => {
     mutation.mutate(data);
   };
+
   return (
     <>
       <h3>Add new user credentials</h3>
-      <form className={`${styles.form}`} onSubmit={handleSubmit(onSubmit)}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div style={{ padding: "2rem" }}>
-          <div
-            className={errors.email ? `${styles.error}` : `${styles.success}`}
-          >
+          <div className={errors.email ? styles.error : styles.success}>
             <label style={{ paddingRight: "1rem" }} htmlFor="email">
               Email:
             </label>
@@ -46,14 +48,12 @@ export default function CreateUserCredentialsForm() {
               })}
             />
             <InvalidMessage
-              isError={errors.email}
-              message={errors.email?.message ? errors.email.message : ""}
+              isError={Boolean(errors.email)}
+              message={errors.email?.message ?? ""}
             />
           </div>
           <div
-            className={
-              errors.password ? `${styles.error}` : `${styles.success}`
-            }
+            className={errors.password ? styles.error : styles.success}
             style={{ paddingTop: "1rem" }}
           >
             <label style={{ paddingRight: "1rem" }} htmlFor="password">
@@ -72,8 +72,8 @@ export default function CreateUserCredentialsForm() {
               })}
             />
             <InvalidMessage
-              isError={errors.password}
-              message={errors.password?.message ? errors.password.message : ""}
+              isError={Boolean(errors.password)}
+              message={errors.password?.message ?? ""}
             />
           </div>
           <div style={{ paddingTop: "1rem" }}>

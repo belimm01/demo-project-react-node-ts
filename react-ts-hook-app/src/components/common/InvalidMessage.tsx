@@ -1,22 +1,23 @@
-import React from "react";
-import styles from "./../../style/main.module.scss";
+import styles from "../../style/main.module.scss";
 
-export interface FilterViewProps {
+export interface InvalidMessageProps {
   isError: boolean;
   message: string;
 }
 
-export default function InvalidMessage(props: FilterViewProps) {
-  const { isError, message } = props;
+export default function InvalidMessage({
+  isError,
+  message,
+}: InvalidMessageProps) {
+  if (!isError) {
+    return null;
+  }
+
   return (
-    <>
-      {isError && (
-        <div>
-          <span style={{ paddingRight: "5px" }} className={styles.errorMessage}>
-            {message}
-          </span>
-        </div>
-      )}
-    </>
+    <div>
+      <span style={{ paddingRight: "5px" }} className={styles.errorMessage}>
+        {message}
+      </span>
+    </div>
   );
 }

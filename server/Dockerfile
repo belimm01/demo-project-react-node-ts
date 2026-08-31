@@ -20,7 +20,6 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
 COPY package.json ./
 
-# node:22-slim ships an unprivileged "node" user
 USER node
 EXPOSE 3030
 CMD ["node", "dist/app.js"]

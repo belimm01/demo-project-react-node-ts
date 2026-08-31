@@ -5,11 +5,7 @@ const toInt = (value: string | undefined, fallback: number): number => {
   return Number.isNaN(parsed) ? fallback : parsed;
 };
 
-/**
- * Central, validated view of the runtime configuration. Every secret and
- * environment-specific value is read here so the rest of the code never
- * touches `process.env` directly.
- */
+// All environment access goes through here so nothing else reads process.env directly.
 export const env = {
   port: toInt(process.env.PORT, 3030),
   corsOrigin: process.env.CORS_ORIGIN ?? "*",

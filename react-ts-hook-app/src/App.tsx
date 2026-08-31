@@ -1,9 +1,8 @@
-import React from "react";
 import "./App.css";
 import styles from "./style/main.module.scss";
 import CreateUserCredentialsForm from "./components/form/CreateUserCredentialsForm";
 import UserCredentialsList from "./components/UserCredentialsList";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
 

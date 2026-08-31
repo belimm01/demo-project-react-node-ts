@@ -1,25 +1,29 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "noImplicitAny": false,
-    "removeComments": true,
-    "noLib": false,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ES2022"],
+    "outDir": "dist",
+    "rootDir": "src",
     "sourceMap": true,
-    "listFiles": true,
-    "isolatedModules": false,
-    "moduleResolution": "node",
-    "suppressImplicitAnyIndexErrors": true
+    "declaration": false,
+    "removeComments": true,
+
+    "strict": true,
+    "noImplicitOverride": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "useDefineForClassFields": false,
+
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true
   },
-  "exclude": [
-    "node_modules"
-  ],
-  "files": [
-    "app.ts"
-  ],
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }
